@@ -1,7 +1,6 @@
-package com.popov.shoppinglist.presentation
+package com.popov.shoppinglist.presentation.screens
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.popov.shoppinglist.databinding.ActivityMainBinding
