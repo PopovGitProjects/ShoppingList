@@ -16,9 +16,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.shopList.observe(this){
-            Log.d("My", "viewModel data $it")
+        viewModel.shopListLiveData.observe(this){
+
         }
-        viewModel.getShopList()
     }
 }
