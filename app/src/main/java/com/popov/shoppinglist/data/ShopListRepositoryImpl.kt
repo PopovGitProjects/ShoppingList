@@ -1,6 +1,5 @@
 package com.popov.shoppinglist.data
 
-import android.provider.LiveFolders
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.popov.shoppinglist.domain.models.ShopItem
@@ -9,7 +8,9 @@ import com.popov.shoppinglist.domain.repository.ShopListRepository
 object ShopListRepositoryImpl : ShopListRepository {
 
     private val shopListLiveDate = MutableLiveData<List<ShopItem>>()
-    private val shopList = mutableListOf<ShopItem>()
+    private val shopList = sortedSetOf<ShopItem>({ p0, p1 ->            //сортировка листа по id
+        p0.id.compareTo(p1.id)
+    })
     private var autoIncrementId = 0
 
     init {
