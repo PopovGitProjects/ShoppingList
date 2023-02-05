@@ -1,7 +1,5 @@
 package com.popov.shoppinglist.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.popov.shoppinglist.data.ShopListRepositoryImpl
 import com.popov.shoppinglist.domain.models.ShopItem
@@ -23,7 +21,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun changeEnableState(shopItem: ShopItem) {
-        val newItem = shopItem.copy(enabled = shopItem.enabled)
-        editShopItemUseCase.editShopItem(newItem)
+//        val newItem = shopItem.copy(enabled = shopItem.enabled)
+//        editShopItemUseCase.editShopItem(newItem)
+        when(shopItem.enabled){
+            true -> {editShopItemUseCase.editShopItem(shopItem.copy(enabled = false))}
+            false -> {editShopItemUseCase.editShopItem(shopItem.copy(enabled = true))}
+        }
     }
 }
