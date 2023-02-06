@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.popov.shoppinglist.databinding.ActivityMainBinding
-import com.popov.shoppinglist.domain.models.ShopItem
 import com.popov.shoppinglist.presentation.adapters.ShopListAdapter
 import com.popov.shoppinglist.presentation.viewmodels.MainViewModel
 
@@ -21,16 +20,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setupRecyclerVew()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopListLiveData.observe(this) {
-            setupRecyclerVew(it)
+            shopListAdapter.submitList(it)
         }
     }
 
-    private fun setupRecyclerVew(list: List<ShopItem>) {
+    private fun setupRecyclerVew() {
         val rvShopList = binding.rvMain
-        shopListAdapter = ShopListAdapter(list)
+        shopListAdapter = ShopListAdapter()
         rvShopList.adapter = shopListAdapter
         rvShopList.recycledViewPool.setMaxRecycledViews(
             ShopListAdapter.VIEW_TYPE_ENABLED, ShopListAdapter.MAX_POOL_SIZE
@@ -40,13 +39,10 @@ class MainActivity : AppCompatActivity() {
         )
         setupLongClickListener()
         setupClickListener()
-        setupSwipeListener(list, rvShopList)
+        setupSwipeListener(rvShopList)
     }
 
-    private fun setupSwipeListener(
-        list: List<ShopItem>,
-        rvShopList: RecyclerView
-    ) {
+    private fun setupSwipeListener(rvShopList: RecyclerView) {
         val callback = object :
             ItemTouchHelper.SimpleCallback(
                 0,
@@ -61,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val item = list[viewHolder.adapterPosition]
+                val item = shopListAdapter.currentList[viewHolder.adapterPosition]
                 viewModel.deleteShopItem(item)
             }
         }
