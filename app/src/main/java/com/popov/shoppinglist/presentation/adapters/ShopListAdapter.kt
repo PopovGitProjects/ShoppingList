@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.popov.shoppinglist.R
 import com.popov.shoppinglist.domain.models.ShopItem
-import com.popov.shoppinglist.presentation.ShopItemDiffCallback
 
 
 class ShopListAdapter :

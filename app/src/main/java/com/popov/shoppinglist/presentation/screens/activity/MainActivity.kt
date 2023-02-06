@@ -1,7 +1,6 @@
-package com.popov.shoppinglist.presentation.screens
+package com.popov.shoppinglist.presentation.screens.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -67,7 +66,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Toast.makeText(this, "Click!", Toast.LENGTH_SHORT).show()
         }
     }
 
