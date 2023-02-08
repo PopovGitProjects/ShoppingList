@@ -6,4 +6,6 @@
     <string name="name">Name</string>
     <string name="count">Count</string>
     <string name="save">Save</string>
+    <string name="error_edit_text_name">Name is incorrect</string>
+    <string name="error_edit_text_count">Count is incorrect</string>
 </resources>

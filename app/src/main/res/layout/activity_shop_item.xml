@@ -23,9 +23,11 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#757575" />
+            android:textColorHint="#757575"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/count"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="@+id/otFieldName"
         app:layout_constraintStart_toStartOf="@+id/otFieldName"
         app:layout_constraintTop_toBottomOf="@+id/otFieldName"
@@ -42,13 +44,16 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#757575" />
+            android:inputType="number"
+            android:textColorHint="#757575"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/save"
