@@ -1,64 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fcActivityShop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.screens.activity.ShopItemActivity">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/otFieldName"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/name"
-        app:layout_constraintBottom_toTopOf="@+id/otFieldCount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="#757575"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/otFieldCount"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/count"
-        app:layout_constraintBottom_toTopOf="@+id/btnSave"
-        app:layout_constraintEnd_toEndOf="@+id/otFieldName"
-        app:layout_constraintStart_toStartOf="@+id/otFieldName"
-        app:layout_constraintTop_toBottomOf="@+id/otFieldName"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtCount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textColorHint="#757575"
-            tools:ignore="TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/otFieldCount"
-        app:layout_constraintStart_toStartOf="@+id/otFieldCount" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".presentation.screens.activity.ShopItemActivity"
+    tools:layout="@layout/fragment_shop_item"
+    />

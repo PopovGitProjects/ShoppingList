@@ -82,11 +82,11 @@ class ShopItemViewModel : ViewModel() {
     }
 
     fun resetErrorInputName() {
-        _errorInputName.value = false
+        _errorInputName.value = false // TODO: Ошибка не уходит, разобраться!
     }
 
     fun resetErrorInputCount() {
-        _errorInputCount.value = false
+        _errorInputCount.value = false // TODO: Ошибка не уходит, разобраться!
     }
 
     private fun setNeedToCloseScreen() {

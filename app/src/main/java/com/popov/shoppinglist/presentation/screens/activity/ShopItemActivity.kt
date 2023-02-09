@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.popov.shoppinglist.R
 import com.popov.shoppinglist.databinding.ActivityShopItemBinding
 import com.popov.shoppinglist.domain.models.ShopItem
+import com.popov.shoppinglist.presentation.screens.fragments.ShopItemFragment
 import com.popov.shoppinglist.presentation.viewmodels.ShopItemViewModel
 
 class ShopItemActivity : AppCompatActivity() {
@@ -28,98 +29,96 @@ class ShopItemActivity : AppCompatActivity() {
         binding = ActivityShopItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
         parseIntent()
-        viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
-
         launchRightMode()
-        observeViewModel()
-        addChangeTextListener()
     }
 
-    private fun observeViewModel() = with(binding) {
-        viewModel.shopItemLiveData.observe(this@ShopItemActivity) {
-            edtName.setText(it.name)
-            edtCount.setText(it.count.toString())
-        }
-        viewModel.errorInputName.observe(this@ShopItemActivity) {
-            val massage = if (it) {
-                getString(R.string.error_edit_text_name)
-            } else {
-                null
-            }
-            otFieldName.error = massage
-        }
-        viewModel.errorInputCount.observe(this@ShopItemActivity) {
-            val massage = if (it) {
-                getString(R.string.error_edit_text_count)
-            } else {
-                null
-            }
-            otFieldCount.error = massage
-        }
-        viewModel.needToCloseScreen.observe(this@ShopItemActivity) {
-            finish()
-        }
-    }
+//    private fun observeViewModel() = with(binding) {
+//        viewModel.shopItemLiveData.observe(this@ShopItemActivity) {
+//            edtName.setText(it.name)
+//            edtCount.setText(it.count.toString())
+//        }
+//        viewModel.errorInputName.observe(this@ShopItemActivity) {
+//            val massage = if (it) {
+//                getString(R.string.error_edit_text_name)
+//            } else {
+//                null
+//            }
+//            otFieldName.error = massage
+//        }
+//        viewModel.errorInputCount.observe(this@ShopItemActivity) {
+//            val massage = if (it) {
+//                getString(R.string.error_edit_text_count)
+//            } else {
+//                null
+//            }
+//            otFieldCount.error = massage
+//        }
+//        viewModel.needToCloseScreen.observe(this@ShopItemActivity) {
+//            finish()
+//        }
+//    }
 
-    private fun launchEditMod() = with(binding) {
-        viewModel.getShopItem(shopItemId)
-
-        btnSave.setOnClickListener {
-            viewModel.editShopItem(edtName.text?.toString(), edtCount.text?.toString())
-        }
-    }
-
+//    private fun launchEditMod() = with(binding) {
+//        viewModel.getShopItem(shopItemId)
+//
+//        btnSave.setOnClickListener {
+//            viewModel.editShopItem(edtName.text?.toString(), edtCount.text?.toString())
+//        }
+//    }
+//
     private fun launchRightMode() {
-        when (screenMode) {
+        val fragment = when (screenMode) {
             MODE_ADD -> {
-                launchAddMod()
+                ShopItemFragment.newInstanceAddItem()
             }
             MODE_EDIT -> {
-                launchEditMod()
+                ShopItemFragment.newInstanceEditItem(shopItemId)
             }
+            else -> throw RuntimeException("Unknown screen mode $screenMode")
         }
+        supportFragmentManager.beginTransaction().add(R.id.fcActivityShop, fragment).commit()
     }
 
-    private fun addChangeTextListener() = with(binding) {
-        Log.d("My", "addChangeTextListener() started")
-        edtName.addTextChangedListener {
-            object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//    private fun addChangeTextListener() = with(binding) {
+//        Log.d("My", "addChangeTextListener() started")
+//        edtName.addTextChangedListener {
+//            object : TextWatcher {
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                    Log.d("My", "onTextChanged() started")
+//                    viewModel.resetErrorInputName()
+//                    Log.d("My", "error ${viewModel.errorInputName.value}")
+//                }
+//
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
+//
+//            }
+//        }
+//        edtCount.addTextChangedListener {
+//            object : TextWatcher {
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                    viewModel.resetErrorInputCount()
+//                }
+//
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
+//
+//            }
+//        }
+//    }
 
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    Log.d("My", "onTextChanged() started")
-                    viewModel.resetErrorInputName()
-                    Log.d("My", "error ${viewModel.errorInputName.value}")
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-            }
-        }
-        edtCount.addTextChangedListener {
-            object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    viewModel.resetErrorInputCount()
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-            }
-        }
-    }
-
-    private fun launchAddMod() = with(binding) {
-        btnSave.setOnClickListener {
-            viewModel.addShopItem(edtName.text?.toString(), edtCount.text?.toString())
-        }
-    }
+//    private fun launchAddMod() = with(binding) {
+//        btnSave.setOnClickListener {
+//            viewModel.addShopItem(edtName.text?.toString(), edtCount.text?.toString())
+//        }
+//    }
 
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {
