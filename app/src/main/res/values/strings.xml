@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">ShoppingList</string>
     <string name="floating_action_button">Floating action button</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="count">Count</string>
+    <string name="save">Save</string>
+    <string name="error_edit_text_name">Name is incorrect</string>
+    <string name="error_edit_text_count">Count is incorrect</string>
 </resources>
