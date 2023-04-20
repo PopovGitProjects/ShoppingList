@@ -1,56 +1,36 @@
 package com.popov.shoppinglist.data
 
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import com.popov.shoppinglist.data.base.AppDataBase
 import com.popov.shoppinglist.domain.models.ShopItem
 import com.popov.shoppinglist.domain.repository.ShopListRepository
-import kotlin.random.Random
 
-object ShopListRepositoryImpl : ShopListRepository {
+class ShopListRepositoryImpl(application: Application) : ShopListRepository {
 
-    private val shopListLiveDate = MutableLiveData<List<ShopItem>>()
-    private val shopList = sortedSetOf<ShopItem>({ p0, p1 ->            //сортировка листа по id
-        p0.id.compareTo(p1.id)
-    })
-    private var autoIncrementId = 0
+    private val shopListDao = AppDataBase.getInstance(application).shopListDao()
+    private val mapper = ShopListMapper()
 
-    init {
-        for (i in 1..30) {
-            val item = ShopItem("Name $i", i, Random.nextBoolean())
-            addShopItem(item)
-        }
-    }
 
-    override fun getShopList(): LiveData<List<ShopItem>> {
-        return shopListLiveDate
+    override fun getShopList(): LiveData<List<ShopItem>> = shopListDao.getShopList().map {
+        mapper.mapListDbModelToListEntity(it)
     }
 
     override fun getShopItem(shopItemId: Int): ShopItem {
-
-        return shopList.find { it.id == shopItemId }
-            ?: throw RuntimeException("Element with id: $shopItemId not found")
+        val dbModel = shopListDao.getShopItem(shopItemId)
+        return mapper.mapDbModelToEntity(dbModel)
     }
 
     override fun addShopItem(shopItem: ShopItem) {
-        if (shopItem.id == ShopItem.UNDEFINED_ID) {
-            shopItem.id = autoIncrementId++
-        }
-        shopList.add(shopItem)
-        updateList()
+        shopListDao.addShopItem(mapper.mapEntityToDbModel(shopItem))
     }
 
     override fun editShopItem(shopItem: ShopItem) {
-        val oldElement = getShopItem(shopItem.id)
-        shopList.remove(oldElement)
         addShopItem(shopItem)
     }
 
     override fun deleteShopItem(shopItem: ShopItem) {
-        shopList.remove(shopItem)
-        updateList()
-    }
-
-    private fun updateList() {
-        shopListLiveDate.value = shopList.toList()
+        shopListDao.deleteShopItem(shopItem.id)
     }
 }
