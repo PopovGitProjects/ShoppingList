@@ -4,7 +4,7 @@ import com.popov.shoppinglist.domain.models.ShopItem
 import com.popov.shoppinglist.domain.repository.ShopListRepository
 
 class DeleteShopItemUseCase(private val shopListRepository: ShopListRepository) {
-    fun deleteShopItem(shopItem: ShopItem) {
+    suspend fun deleteShopItem(shopItem: ShopItem) {
         shopListRepository.deleteShopItem(shopItem)
     }
 }
